@@ -382,6 +382,107 @@
     color: #2b0a1a !important;
 }
 
+.bg-fuchsia {
+    background-color: #D5006D !important;
+    color: white !important;
+}
+
+.bg-fuchsia-glass {
+    background: rgba(213, 0, 109, 0.29);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.bg-fuchsia-100 {
+    background-color: #F8BBD0 !important;
+    color: black !important;
+}
+
+.bg-fuchsia-200 {
+    background-color: #F48FB1 !important;
+    color: black !important;
+}
+
+.bg-fuchsia-300 {
+    background-color: #F06292 !important;
+    color: black !important;
+}
+
+.bg-fuchsia-400 {
+    background-color: #EC407A !important;
+    color: black !important;
+}
+
+.bg-fuchsia-500 {
+    background-color: #D5006D !important;
+    color: white !important;
+}
+
+.bg-fuchsia-600 {
+    background-color: #C51162 !important;
+    color: white !important;
+}
+
+.bg-fuchsia-700 {
+    background-color: #AB003C !important;
+    color: white !important;
+}
+
+.bg-fuchsia-800 {
+    background-color: #880E4F !important;
+    color: white !important;
+}
+
+.bg-fuchsia-900 {
+    background-color: #6A1B9A !important;
+    color: white !important;
+}
+
+.bg-fuchsia {
+    background-color: #D5006D !important;
+    color: white !important;
+}
+
+
+
+.text-fuchsia-100 {
+    color: #F8BBD0 !important;
+}
+
+.text-fuchsia-200 {
+    color: #F48FB1 !important;
+}
+
+.text-fuchsia-300 {
+    color: #F06292 !important;
+}
+
+.text-fuchsia-400 {
+    color: #EC407A !important;
+}
+
+.text-fuchsia-500 {
+    color: #D5006D !important;
+}
+
+.text-fuchsia-600 {
+    color: #C51162 !important;
+}
+
+.text-fuchsia-700 {
+    color: #AB003C !important;
+}
+
+.text-fuchsia-800 {
+    color: #880E4F !important;
+}
+
+.text-fuchsia-900 {
+    color: #6A1B9A !important;
+}
+
 /* Red Background Variants  By Webreca Technologies | sales@webreca.com | Copyright © Webreca Technologies 2025 */
 .bg-red {
     background-color: #dc3545 !important;
