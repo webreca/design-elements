@@ -1,0 +1,55 @@
+{
+
+	"Print to console": {
+		"prefix": "Debug Array",
+		"body": [
+			"echo '<pre>';",
+			"print_r($$debug_array);",
+			"echo '</pre>';",
+			"exit;"
+		],
+		"description": "Debug Array"
+	},
+
+	"Return Redirect Route": {
+		"prefix": "Return Redirect Route",
+		"body": [
+			"return redirect()->route('admin.users.index')->with('success', 'User created sucessfully!');"
+		],
+		"description": "Return Redirect Route"
+	},
+
+	"Return Redirect Back": {
+		"prefix": "Return Redirect Back",
+		"body": [
+			"return redirect()->back()->with('success', 'User created sucessfully!');"
+		],
+		"description": "Return Redirect Back"
+	},
+
+	"Validation" : {
+		"prefix": "Validator Snippet",
+		"body": [
+			"$$rules = [",
+				"\t'basic_salary'              => ['required'],",
+			"];",
+			"$$messages = [",
+				"\t'basic_salary.required'     => 'Please enter Basic salary',",
+			"];",
+			"$$this->validate($$request, $$rules, $$messages);"
+		],
+		"description": "Validator Snippet"
+	},
+	"guardlogin" : {
+		"prefix": "Guard Login",
+		"body": [
+			"auth()->guard('customer')->login($$customer);"
+		],
+		"description": "Guard Login"
+	}
+
+	
+
+	
+
+}

@@ -1,0 +1,729 @@
+{
+	"Colors CDN": {
+		"prefix": "Colors CDN",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/css/colors/colors.css' rel='stylesheet' />",
+		]
+	},
+	"Icons CDN": {
+		"prefix": "Icons CDN",
+		"body": [
+			"<link href='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/css/icons/icons.min.css' rel='stylesheet' />",
+		]
+	},
+	"Address": {
+		"prefix": "Input Address",
+		"body": [
+			"<div class='col-md-6 mb-2 {{ $errors->has('address') ? 'has-error' : '' }}'>",
+			"\t<label for='address' class='col-form-label'>Address <span class='text-danger'>*</span></label>",
+			"\t\t<div class='input-group input-group-merge'>",
+			"\t\t\t<div class='input-group-text'>",
+			"\t\t\t\t<i class='uil-map-pin-alt'></i>",
+			"\t\t\t</div>",
+			"\t\t\t<input id='latitude' name='latitude' type='hidden' class='form-control' value='{{ old('latitude') }}'>",
+			"\t\t\t<input id='longitude' name='longitude' type='hidden' class='form-control' value='{{ old('longitude') }}'>",
+			"\t\t\t<input id='address' name='address' type='text' class='form-control @error('address') is-invalid @enderror' value='{{ old('address') }}' autocomplete='off' placeholder='Please enter address here'>",
+			"\t\t</div>",
+			"\t@error('address')",
+			"\t\t<span id='address-error' class='error invalid-feedback'>Please enter store address</span>",
+			"\t@enderror",
+			"</div>",
+			"<script src='https://maps.googleapis.com/maps/api/js?key={{ config('app.google_api_key') }}&libraries=places&callback=Function.prototype'></script>",
+			"<script>",
+			"let address = document.getElementById('address');",
+			"let autocomplete = new google.maps.places.Autocomplete(address);",
+			"autocomplete.addListener('place_changed', () => {",
+			"\tconst place = autocomplete.getPlace();",
+			"\t$('#latitude').val(place.geometry.location.lat())",
+			"\t$('#longitude').val(place.geometry.location.lng())",
+			"});",
+			"</script>",
+		],
+	},
+	"deleteButton": {
+		"prefix": "Delete Button",
+		"body": [
+			"<a href='javascript:void(0);' onclick='confirmDelete({{ $$customer->id }})' class='dropdown-item'><i class='mdi mdi-trash-can-outline me-1'></i>Delete Customer</a>",
+			"<form id='delete-form{{ $$customer->id }}' action='{{ route('admin.customers.destroy', $$customer->id) }}' method='POST'>",
+			"\t<input type='hidden' name='_token'value='{{ csrf_token() }}'>",
+			"\t\t<input type='hidden' name='_method' value='DELETE'>",
+			"</form>",
+			"<script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>",
+			"<script>",
+			"function confirmDelete(e) {",
+			"\tSwal.fire({",
+			"\t\ttitle: 'Are you sure?',",
+			"\t\ttext: 'You will not able to revert this!',",
+			"\t\ticon: 'warning',",
+			"\t\tshowCancelButton: !0,",
+			"\t\tconfirmButtonColor: '#3085d6',",
+			"\t\tcancelButtonColor: '#d33',",
+			"\t\tconfirmButtonText: 'Yes, Delete it!'",
+			"\t}).then(t => {",
+			"\t\tt.isConfirmed && document.getElementById('delete-form' + e).submit()",
+			"\t})",
+			"}",
+			"</script>",
+		],
+	},
+	"select2cdn": {
+		"prefix": "Select 2 CDN",
+		"body": [
+			"<link href='https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css' rel='stylesheet' />",
+			"<script src='https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js'></script>",
+			"<script>",
+			"\t$(document).ready(function() {",
+			"\t\t$('#payment_types').select2({",
+			"\t\t\tplaceholder: 'Select',",
+			"\t\t\tallowClear: true",
+			"\t\t});",
+			"\t\t$('#payment_mode').select2({",
+			"\t\t\tplaceholder: 'Select',",
+			"\t\t\tallowClear: true",
+			"\t\t});",
+			"\t});",
+			"</script>",
+		],
+	},
+	"selected": {
+		"prefix": "Selected Option",
+		"body": [
+			"{{ old('vehicle_type', isset($$estimate) ? $$estimate->cab->vehicle_type : '') == 'Tata Safari' ? 'selected' : '' }}",
+		],
+	},
+	"card": {
+		"prefix": "Card",
+		"body": [
+			"\t<div class='card'>",
+			"\t\t<div class='card-header'>",
+			"\t\t\t<h4 class='card-title my-0'>Card Title</h4>",
+			"\t\t</div>",
+			"\t\t<div class='card-body'>",
+			"\t\t\t<div class='row'>",
+			"\t\t\t\t<div class='col-sm-12'>",
+			"\t\t\t\t</div>",
+			"\t\t\t</div>",
+			"\t\t</div>",
+			"\t</div>",
+		],
+	},
+	"pagination": {
+		"prefix": "Pagination",
+		"body": [
+			"{{ $$estimates->appends(request()->query())->links('pagination::bootstrap-5') }}"
+		]
+	},
+	"Carbon": {
+		"prefix": "Carbon Format",
+		"body": [
+			"{{ \\Carbon\\Carbon::parse($$loan->deduction_date)->format('M d Y')  }}"
+		]
+	},
+	"Model": {
+		"prefix": "Model Query",
+		"body": [
+			"@php",
+			"\t$$model = \\App\\Models\\Model::where('id', $$id)->first();",
+			"@endphp"
+		]
+	},
+	"Dynamic Option": {
+		"prefix": "Dynamic Option",
+		"body": [
+			"\t<div class='card'>",
+			"\t\t<div class='card-header'>",
+			"\t\t\t<h4 class='card-title my-0'>Dynamic Options</h4>",
+			"\t\t</div>",
+			"\t\t<div class='card-body'>",
+			"\t\t\t<div class='row'>",
+			"\t\t\t\t<div class='col-sm-12'>",
+			"\t\t\t\t\t<table id=\"item\" class=\"table table-sm\">",
+			"\t\t\t\t\t<thead>",
+			"\t\t\t\t\t\t<tr>",
+			"\t\t\t\t\t\t\t<th>Field 1</th>",
+			"\t\t\t\t\t\t\t<th>Field 2</th>",
+			"\t\t\t\t\t\t\t<th>Field 3</th>",
+			"\t\t\t\t\t\t\t<th class=\"text-end\"></th>",
+			"\t\t\t\t\t\t</tr>",
+			"\t\t\t\t\t</thead>",
+			"\t\t\t\t\t<tbody>",
+			"\t\t\t\t\t\t<tr id=\"item-row0\">",
+			"\t\t\t\t\t\t\t<td><input type=\"text\" name=\"item[0][field_1]\" placeholder=\"Field 1\" class=\"form-control\" id=\"field1_0\" required></td>",
+			"\t\t\t\t\t\t\t<td><input type=\"text\" name=\"item[0][field_2]\" placeholder=\"Field 2\" class=\"form-control\" id=\"field2_0\" required></td>",
+			"\t\t\t\t\t\t\t<td><input type=\"text\" name=\"item[0][field_3]\" placeholder=\"Field 3\" class=\"form-control\" id=\"field3_0\" required></td>",
+			"\t\t\t\t\t\t\t<td class=\"text-end\"><button type=\"button\" onclick=\"$('#item-row0').remove();\" class=\"btn btn-danger\"><i class=\"fas fa-minus-circle\"></i></button></td>",
+			"\t\t\t\t\t\t</tr>",
+			"\t\t\t\t\t</tbody>",
+			"\t\t\t\t\t<tfoot>",
+			"\t\t\t\t\t\t<tr>",
+			"\t\t\t\t\t\t\t<td class=\"text-end\" style=\"border-bottom: none;\" colspan=\"5\"><button type=\"button\" onclick=\"addItem();\" data-toggle=\"tooltip\" title=\"Add Item\" class=\"btn btn-secondary\" data-original-title=\"Add Item\"><i class=\"fas fa-plus-circle\"></i></button></td>",
+			"\t\t\t\t\t\t</tr>",
+			"\t\t\t\t\t</tfoot>",
+			"\t\t\t\t\t</table>",
+			"\t\t\t\t</div>",
+			"\t\t\t</div>",
+			"\t\t</div>",
+			"\t</div>",
+		]
+	},
+	"Dynamic Option Jquery": {
+		"prefix": "Dynamic Option Jquery",
+		"body": [
+			"<script>",
+			"\tvar item_row =  {{ isset($$booking) ? count($$booking->items) : 1 }}",
+			"\tfunction addItem() {",
+			"\t\tif(item_row < 50){",
+			"\t\t\thtml  = '<tr id=\"item-row' + item_row + '\">';",
+			"\t\t\thtml += '<td><input type=\"text\" name=\"item[' + item_row + '][field_1]\" placeholder=\"Field 1\" class=\"form-control\" id=\"field1_' + item_row + '\" required></td>';",
+			"\t\t\thtml += '<td><input type=\"text\" name=\"item[' + item_row + '][field_2]\" placeholder=\"Field 2\" class=\"form-control\" id=\"field2_' + item_row + '\" required></td>';",
+			"\t\t\thtml += '<td><input type=\"text\" name=\"item[' + item_row + '][field_3]\" placeholder=\"Field 3\" class=\"form-control\" id=\"field3_' + item_row + '\" required></td>';",
+			"\t\t\thtml += '<td class=\"text-end\"><button type=\"button\" onclick=\"$(\\'#item-row' + item_row + '\\').remove();\" data-toggle=\"tooltip\" title=\"Remove Button\" class=\"btn btn-danger ms-btn-icon btn-danger\"><i class=\"fas fa-minus-circle\"></i></button></td>';",
+			"\t\t\thtml += '<tr>';",
+			"\t\t\t$('#item tbody').append(html);",
+			"\t\t\titem_row++;",
+			"\t\t}",
+			"\t}",
+			"</script>",
+		]
+	},
+	"Input Type Name": {
+		"prefix": "Input Type Name",
+		"body": [
+			"<div class=\"form-group col-md-12\">",
+			"\t<label for=\"firstname\" class=\"col-form-label\">Firstname <span class=\"text-danger\">*</span></label>",
+			"\t<input id=\"firstname\" type=\"text\" class=\"form-control @error('firstname') is-invalid @enderror\" name=\"firstname\" value=\"{{ old('firstname') }}\" placeholder=\"Enter Customer Firstname\">",
+			"\t@error('firstname')",
+			"\t\t<div class=\"invalid-feedback\">",
+			"\t\t\t{{ $$message }}",
+			"\t\t</div>",
+			"\t@enderror",
+			"</div>",
+		]
+	},
+	"Input Type Number": {
+		"prefix": "Input Type Number",
+		"body": [
+			"<div class=\"form-group col-md-12\">",
+			"\t<label for=\"price\" class=\"col-form-label\">Price <span class=\"text-danger\">*</span></label>",
+			"\t<input id=\"price\" type=\"number\" class=\"form-control @error('price') is-invalid @enderror\" name=\"price\" value=\"{{ old('price', 0) }}\" step=\"any\" min=\"0\" placeholder=\"Enter Price\">",
+			"\t@error('price')",
+			"\t\t<div class=\"invalid-feedback\">",
+			"\t\t\t{{ $$message }}",
+			"\t\t</div>",
+			"\t@enderror",
+			"</div>",
+		]
+	},
+	"Input Type Select": {
+		"prefix": "Input Type Select",
+		"body": [
+			"<div class=\"form-group col-md-12\">",
+			"\t<label for=\"gender\" class=\"col-form-label\">Gender <span class=\"text-danger\">*</span></label>",
+			"\t<select id=\"gender\" class=\"form-select @error('gender') is-invalid @enderror\" name=\"gender\">",
+			"\t\t<option value=\"\">Choose Customer Gender</option>",
+			"\t\t<option value=\"Male\" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>",
+			"\t\t<option value=\"Female\" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>",
+			"\t\t<option value=\"Other\" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>",
+			"\t</select>",
+			"\t@error('gender')",
+			"\t\t<div class=\"invalid-feedback\">",
+			"\t\t\t{{ $$message }}",
+			"\t\t</div>",
+			"\t@enderror",
+			"</div>",
+		]
+	},
+	"Input Type Textarea": {
+		"prefix": "Input Type Textarea",
+		"body": [
+			"<div class=\"form-group col-md-12\">",
+			"\t<label for=\"description\" class=\"col-form-label\">Description <span class=\"text-danger\">*</span></label>",
+			"\t<textarea id=\"description\" class=\"form-control @error('description') is-invalid @enderror\" name=\"description\" rows=\"3\" placeholder=\"Write Description here\">{{ old('description') }}</textarea>",
+			"\t@error('description')",
+			"\t\t<div class=\"invalid-feedback\">",
+			"\t\t\t{{ $$message }}",
+			"\t\t</div>",
+			"\t@enderror",
+			"</div>",
+		]
+	},
+	"Input Type Radio Button": {
+		"prefix": "Input Type Radio Button",
+		"body": [
+			"<div class=\"form-group col-md-12\">",
+			"\t<label for=\"enabled\" class=\"col-form-label\">Enabled <span class=\"text-danger\">*</span></label>",
+			"\t<div class=\"form-check form-check-inline\">",
+			"\t\t<input type=\"radio\" id=\"yes\" name=\"enabled\" class=\"form-check-input\" value=\"1\" {{ old('enabled') == true ? 'selected' : '' }}>",
+			"\t\t<label class=\"form-check-label\" for=\"yes\">Yes</label>",
+			"\t</div>",
+			"\t<div class=\"form-check form-check-inline\">",
+			"\t\t<input type=\"radio\" id=\"no\" name=\"enabled\" class=\"form-check-input\" value=\"0\" {{ old('enabled') == false ? 'selected' : '' }}>",
+			"\t\t<label class=\"form-check-label\" for=\"no\">No</label>",
+			"\t</div>",
+			"\t@error('description')",
+			"\t\t<div class=\"invalid-feedback\">",
+			"\t\t\t{{ $$message }}",
+			"\t\t</div>",
+			"\t@enderror",
+			"</div>",
+		]
+	},
+	"Hyper Template": {
+		"prefix": "Hyper Template",
+		"body": [
+			"@extends('layouts.admin')",
+			"@section('title', 'Hyper Template')",
+			"@section('content')",
+			"\t<div class=\"container-fluid\">",
+			"\t\t<div class=\"row\">",
+			"\t\t\t<div class=\"col-12\">",
+			"\t\t\t\t<div class=\"page-title-box\">",
+			"\t\t\t\t\t<div class=\"page-title-right\">",
+			"\t\t\t\t\t\t<a href=\"{{ url()->previous() }}\" class=\"btn btn-sm btn-dark me-1\"><i class=\"mdi mdi-chevron-double-left me-1\"></i>Back</a>",
+			"\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-sm btn-primary\" form=\"hyperForm\"><i class=\"mdi mdi-database me-1\"></i>Save</button>",
+			"\t\t\t\t\t</div>",
+			"\t\t\t\t\t<h4 class=\"page-title\">Hyper Template</h4>",
+			"\t\t\t\t</div>",
+			"\t\t\t</div>",
+			"\t\t</div>",
+			"\t\t@include('admin.includes.flash-message')",
+			"\t\t<form id=\"hyperForm\" method=\"POST\" action=\"\" enctype=\"multipart/form-data\">",
+			"\t\t\t@csrf",
+			"\t\t\t<div class=\"row\">",
+			"\t\t\t\t<div class=\"col-12\">",
+			"\t\t\t\t\t<div class=\"card\">",
+			"\t\t\t\t\t\t<div class=\"card-header pb-0\">",
+			"\t\t\t\t\t\t\t<h4 class=\"card-title\">Customer Information</h4>",
+			"\t\t\t\t\t\t</div>",
+			"\t\t\t\t\t\t<div class=\"card-body pt-1\">",
+			"\t\t\t\t\t\t\t<div class=\"row\">",
+			"\t\t\t\t\t\t\t\t<div class=\"form-group col-md-12\">",
+			"\t\t\t\t\t\t\t\t\t<label for=\"name\" class=\"col-form-label\">Name <span class=\"text-danger\">*</span></label>",
+			"\t\t\t\t\t\t\t\t\t<input id=\"name\" type=\"text\" class=\"form-control @error('name') is-invalid @enderror\" name=\"name\" value=\"{{ old('name') }}\" placeholder=\"Enter Name\">",
+			"\t\t\t\t\t\t\t\t\t@error('name')",
+			"\t\t\t\t\t\t\t\t\t\t<div class=\"invalid-feedback\">",
+			"\t\t\t\t\t\t\t\t\t\t\t{{ $$message }}",
+			"\t\t\t\t\t\t\t\t\t\t</div>",
+			"\t\t\t\t\t\t\t\t\t@enderror",
+			"\t\t\t\t\t\t\t\t</div>",
+			"\t\t\t\t\t\t\t\t<div class=\"form-group col-md-6\">",
+			"\t\t\t\t\t\t\t\t\t<label for=\"description\" class=\"col-form-label\">Description <span class=\"text-danger\">*</span></label>",
+			"\t\t\t\t\t\t\t\t\t<textarea id=\"description\" class=\"form-control @error('description') is-invalid @enderror\" name=\"description\" rows=\"3\" placeholder=\"Write Description here\">{{ old('description') }}</textarea>",
+			"\t\t\t\t\t\t\t\t\t@error('lastname')",
+			"\t\t\t\t\t\t\t\t\t\t<div class=\"invalid-feedback\">",
+			"\t\t\t\t\t\t\t\t\t\t\t{{ $$message }}",
+			"\t\t\t\t\t\t\t\t\t\t</div>",
+			"\t\t\t\t\t\t\t\t\t@enderror",
+			"\t\t\t\t\t\t\t\t</div>",
+			"\t\t\t\t\t\t\t</div>",
+			"\t\t\t\t\t\t</div>",
+			"\t\t\t\t\t\t<div class=\"card-footer text-end\">",
+			"\t\t\t\t\t\t\t<a href=\"{{ url()->previous() }}\" class=\"btn btn-sm btn-dark me-1\"><i class=\"mdi mdi-chevron-double-left me-1\"></i>Back</a>",
+			"\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-sm btn-primary\" form=\"hyperForm\"><i class=\"mdi mdi-database me-1\"></i>Save</button>",
+			"\t\t\t\t\t\t</div>",
+			"\t\t\t\t\t</div>",
+			"\t\t\t\t</div>",
+			"\t\t\t</div>",
+			"\t\t</form>",
+			"\t</div>",
+			"@endsection",
+		]
+	},
+	"Tiny Editor": {
+		"prefix": "Tiny Editor",
+		"body": [
+			"<script src='{{ asset('assets/js/tinymce/tinymce.min.js') }}'></script>",
+			"<script>",
+			"\ttinymce.init({",
+			"\t\tselector: 'textarea#description',",
+			"\t\theight: 200,",
+			"\t\tmenubar: false,",
+			"\t\tplugins: [",
+			"'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',",
+			"'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',",
+			"'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help',",
+			"'wordcount'",
+			"\t\t],",
+			"\t\ttoolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +",
+			"'bullist numlist checklist outdent indent | removeformat | code table help'",
+			"\t})",
+			"</script>",
+		]
+	},
+	"Phone Input": {
+		"prefix": "Input Type Phone",
+		"body": [
+			"<div class='col-sm-6 mb-2 {{ $$errors->has('phone') ? 'has-error' : '' }}'>",
+			"\t<label class='col-form-label' for='phone'>Phone Number</label>",
+			"\t<input  id='phone' name='phone' type='text' class='form-control' placeholder='Enter Phone Number' value='{{ old('phone') }}'>",
+			"\t<input id='dial-code' name='dialcode' type='hidden' value='{{ old('dialcode') }}'>",
+			"\t<select id='country' name='iso2' class='form-select' style='display: none;'>",
+			"\t\t<option value=''>Select Country</option>",
+			"\t</select>",
+			"\t@error('phone')",
+			"\t\t<div id='phone-error' class='error invalid-feedback'>{{ $$message }}</div>",
+			"\t@enderror",
+			"</div>",
+		]
+	},
+	"ib-add-card": {
+		"prefix": "add-card",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/add-card.webp' alt='add-card' width='150px' />"
+		]
+	},
+	"ib-analytics": {
+		"prefix": "analytics",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/analytics.webp' alt='analytics' width='150px' />"
+		]
+	},
+	"ib-api": {
+		"prefix": "api",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/api.webp' alt='api' width='150px' />"
+		]
+	},
+	"ib-archive": {
+		"prefix": "archive",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/archive.webp' alt='archive' width='150px' />"
+		]
+	},
+	"ib-arrow-down-circle": {
+		"prefix": "arrow-down-circle",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/arrow-down-circle.webp' alt='arrow-down-circle' width='150px' />"
+		]
+	},
+	"ib-arrow-up-circle": {
+		"prefix": "arrow-up-circle",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/arrow-up-circle.webp' alt='arrow-up-circle' width='150px' />"
+		]
+	},
+	"ib-assessment": {
+		"prefix": "assessment",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/assessment.webp' alt='assessment' width='150px' />"
+		]
+	},
+	"ib-assignment": {
+		"prefix": "assignment",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/assignment.webp' alt='assignment' width='150px' />"
+		]
+	},
+	"ib-attribution": {
+		"prefix": "attribution",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/attribution.webp' alt='attribution' width='150px' />"
+		]
+	},
+	"ib-avatar": {
+		"prefix": "avatar",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/avatar.webp' alt='avatar' width='150px' />"
+		]
+	},
+	"ib-bank": {
+		"prefix": "bank",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/bank.webp' alt='bank' width='150px' />"
+		]
+	},
+	"ib-bolt": {
+		"prefix": "bolt",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/bolt.webp' alt='bolt' width='150px' />"
+		]
+	},
+	"ib-bookmark": {
+		"prefix": "bookmark",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/bookmark.webp' alt='bookmark' width='150px' />"
+		]
+	},
+	"ib-bug": {
+		"prefix": "bug",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/bug.webp' alt='bug' width='150px' />"
+		]
+	},
+	"ib-build": {
+		"prefix": "build",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/build.webp' alt='build' width='150px' />"
+		]
+	},
+	"ib-calculate": {
+		"prefix": "calculate",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/calculate.webp' alt='calculate' width='150px' />"
+		]
+	},
+	"ib-calendar": {
+		"prefix": "calendar",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/calendar.webp' alt='calendar' width='150px' />"
+		]
+	},
+	"ib-category": {
+		"prefix": "category",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/category.webp' alt='category' width='150px' />"
+		]
+	},
+	"ib-celebrate": {
+		"prefix": "celebrate",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/celebrate.webp' alt='celebrate' width='150px' />"
+		]
+	},
+	"ib-change-view": {
+		"prefix": "change-view",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/change-view.webp' alt='change-view' width='150px' />"
+		]
+	},
+	"ib-check-circle": {
+		"prefix": "check-circle",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/check-circle.webp' alt='check-circle' width='150px' />"
+		]
+	},
+	"ib-clock": {
+		"prefix": "clock",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/clock.webp' alt='clock' width='150px' />"
+		]
+	},
+	"ib-close": {
+		"prefix": "close",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/close.webp' alt='close' width='150px' />"
+		]
+	},
+	"ib-code": {
+		"prefix": "code",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/code.webp' alt='code' width='150px' />"
+		]
+	},
+	"ib-delete": {
+		"prefix": "delete",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/delete.webp' alt='delete' width='150px' />"
+		]
+	},
+	"ib-disabled": {
+		"prefix": "disabled",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/disabled.webp' alt='disabled' width='150px' />"
+		]
+	},
+	"ib-email": {
+		"prefix": "email",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/email.webp' alt='email' width='150px' />"
+		]
+	},
+	"ib-file": {
+		"prefix": "file",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/file.webp' alt='file' width='150px' />"
+		]
+	},
+	"ib-flat-arrow": {
+		"prefix": "flat-arrow",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/flat-arrow.webp' alt='flat-arrow' width='150px' />"
+		]
+	},
+	"ib-folder": {
+		"prefix": "folder",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/folder.webp' alt='folder' width='150px' />"
+		]
+	},
+	"ib-heart": {
+		"prefix": "heart",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/heart.webp' alt='heart' width='150px' />"
+		]
+	},
+	"ib-help-circle": {
+		"prefix": "help-circle",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/help-circle.webp' alt='help-circle' width='150px' />"
+		]
+	},
+	"ib-home": {
+		"prefix": "home",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/home.webp' alt='home' width='150px' />"
+		]
+	},
+	"ib-inbox": {
+		"prefix": "inbox",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/inbox.webp' alt='inbox' width='150px' />"
+		]
+	},
+	"ib-info-circle": {
+		"prefix": "info-circle",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/info-circle.webp' alt='info-circle' width='150px' />"
+		]
+	},
+	"ib-info-triangle": {
+		"prefix": "info-triangle",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/info-triangle.webp' alt='info-triangle' width='150px' />"
+		]
+	},
+	"ib-loader-1": {
+		"prefix": "loader-1",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/loader-1.webp' alt='loader-1' width='150px' />"
+		]
+	},
+	"ib-loader-2": {
+		"prefix": "loader-2",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/loader-2.webp' alt='loader-2' width='150px' />"
+		]
+	},
+	"ib-loader-3": {
+		"prefix": "loader-3",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/loader-3.webp' alt='loader-3' width='150px' />"
+		]
+	},
+	"ib-loader-4": {
+		"prefix": "loader-4",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/loader-4.webp' alt='loader-4' width='150px' />"
+		]
+	},
+	"ib-notification": {
+		"prefix": "notification",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/notification.webp' alt='notification' width='150px' />"
+		]
+	},
+	"ib-pause": {
+		"prefix": "pause",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/pause.webp' alt='pause' width='150px' />"
+		]
+	},
+	"ib-phone": {
+		"prefix": "phone",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/phone.webp' alt='phone' width='150px' />"
+		]
+	},
+	"ib-play": {
+		"prefix": "play",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/play.webp' alt='play' width='150px' />"
+		]
+	},
+	"ib-ratio": {
+		"prefix": "ratio",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/ratio.webp' alt='ratio' width='150px' />"
+		]
+	},
+	"ib-refresh": {
+		"prefix": "refresh",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/refresh.webp' alt='refresh' width='150px' />"
+		]
+	},
+	"ib-savings-hover-pig": {
+		"prefix": "savings-hover-pig",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/savings-hover-pig.webp' alt='savings-hover-pig' width='150px' />"
+		]
+	},
+	"ib-search": {
+		"prefix": "search",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/search.webp' alt='search' width='150px' />"
+		]
+	},
+	"ib-settings-cog": {
+		"prefix": "settings-cog",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/settings-cog.webp' alt='settings-cog' width='150px' />"
+		]
+	},
+	"ib-share": {
+		"prefix": "share",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/share.webp' alt='share' width='150px' />"
+		]
+	},
+	"ib-shopping": {
+		"prefix": "shopping",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/shopping.webp' alt='shopping' width='150px' />"
+		]
+	},
+	"ib-speed": {
+		"prefix": "speed",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/speed.webp' alt='speed' width='150px' />"
+		]
+	},
+	"ib-tag": {
+		"prefix": "tag",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/tag.webp' alt='tag' width='150px' />"
+		]
+	},
+	"ib-ticket": {
+		"prefix": "ticket",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/ticket.webp' alt='ticket' width='150px' />"
+		]
+	},
+	"ib-trending-down": {
+		"prefix": "trending-down",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/trending-down.webp' alt='trending-down' width='150px' />"
+		]
+	},
+	"ib-trending-up": {
+		"prefix": "trending-up",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/trending-up.webp' alt='trending-up' width='150px' />"
+		]
+	},
+	"ib-undo": {
+		"prefix": "undo",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/undo.webp' alt='undo' width='150px' />"
+		]
+	},
+	"ib-wallet": {
+		"prefix": "wallet",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/wallet.webp' alt='wallet' width='150px' />"
+		]
+	},
+	"ib-wifi": {
+		"prefix": "wifi",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/wifi.webp' alt='wifi' width='150px' />"
+		]
+	},
+	"ib-work": {
+		"prefix": "work",
+		"body": [
+			"<img src='https://raw.githubusercontent.com/webreca/design-elements/refs/heads/main/animated-icons/webp-icons/work.webp' alt='work' width='150px' />"
+		]
+	}
+}
